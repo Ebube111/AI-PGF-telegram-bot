@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 4040;
 
 // Handle the /eligibility command
-bot.onText(/\/eligibility (.+)/, async (msg, match) => {
+bot.onText(/\/review (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const projectDescription = match[1]; // Extract the project description from the command
 
