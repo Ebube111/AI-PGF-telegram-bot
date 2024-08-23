@@ -60,13 +60,12 @@ bot.onText(/\/start/, async (msg) => {
   bot.sendMessage(chatId, startMessage);
 });
 
-bot.onText(/\/.*/, async (msg) => {
+bot.onText(/\/(?!review|start)\w*/, async (msg) => {
   if (expectingDescription) return;
   const chatId = msg.chat.id;
   const unknownCommandMessage = `Sorry, I didn't understand that command. Available commands:\n/review - Review a project\n/start - Set of instructions to get started`;
   bot.sendMessage(chatId, unknownCommandMessage);
 });
-
 // Express POST route to handle Telegram webhook updates
 app.post("/", express.json(), async (req, res) => {
   try {
