@@ -60,7 +60,7 @@ bot.onText(/\/start/, async (msg) => {
   bot.sendMessage(chatId, startMessage);
 });
 
-bot.onText(/^(?!\/(review|start)).*/, async (msg) => {
+bot.onText(/\/.*/, async (msg) => {
   if (expectingDescription) return;
   const chatId = msg.chat.id;
   const unknownCommandMessage = `Sorry, I didn't understand that command. Available commands:\n/review - Review a project\n/start - Set of instructions to get started`;
