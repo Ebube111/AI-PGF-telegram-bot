@@ -26,6 +26,46 @@ bot.onText(/\/review (.+)/, async (msg, match) => {
   }
 });
 
+let expectingDescription = false;
+
+bot.onText(/\/review/, async (msg) => {
+  const chatId = msg.chat.id;
+  expectingDescription = true;
+  bot.sendMessage(chatId, "Please enter your project description:");
+});
+
+bot.on("message", async (msg) => {
+  if (expectingDescription) {
+    const chatId = msg.chat.id;
+    const projectDescription = msg.text;
+    // Call the review function with the project description
+    try {
+      const response = await sendMessage(projectDescription);
+      bot.sendMessage(chatId, response);
+    } catch (error) {
+      console.error("Error reviewing project:", error);
+      bot.sendMessage(
+        chatId,
+        "An error occurred while processing your request."
+      );
+    } finally {
+      expectingDescription = false;
+    }
+  }
+});
+
+bot.onText(/\/start/, async (msg) => {
+  const chatId = msg.chat.id;
+  const startMessage = `Welcome to AI-PGF BOT! This bot is designed to check your project Eligibility status and Provide Reasons.\n\nAvailable commands:\n/review - Followed by the description of your project to review your project`;
+  bot.sendMessage(chatId, startMessage);
+});
+
+bot.onText(/\/.*/, async (msg) => {
+  const chatId = msg.chat.id;
+  const unknownCommandMessage = `Sorry, I didn't understand that command. Available commands:\n/review - Review a project`;
+  bot.sendMessage(chatId, unknownCommandMessage);
+});
+
 // Express POST route to handle Telegram webhook updates
 app.post("/", express.json(), async (req, res) => {
   try {
