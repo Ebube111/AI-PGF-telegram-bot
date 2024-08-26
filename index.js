@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 4040;
 
 setInterval(() => {
   https
-    .get(`https://ai-pgf-telegram-bot.onrender.com`, (res) => {
+    .get(`http://localhost:${PORT}`, (res) => {
       console.log(`Pinged the server - Status Code: ${res.statusCode}`);
     })
     .on("error", (e) => {
