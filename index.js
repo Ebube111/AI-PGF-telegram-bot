@@ -9,6 +9,16 @@ const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: true });
 const app = express();
 const PORT = process.env.PORT || 4040;
 
+setInterval(() => {
+  https
+    .get(`https://ai-pgf-telegram-bot.onrender.com`, (res) => {
+      console.log(`Pinged the server - Status Code: ${res.statusCode}`);
+    })
+    .on("error", (e) => {
+      console.error(`Error pinging the server: ${e.message}`);
+    });
+}, 30000);
+
 // Handle the /eligibility command
 bot.onText(/\/review (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
