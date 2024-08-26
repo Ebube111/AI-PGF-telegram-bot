@@ -1,7 +1,7 @@
 const express = require("express");
 const TelegramBot = require("node-telegram-bot-api");
 const { sendMessage } = require("./predict");
-const https = require("https");
+const http = require("http");
 require("dotenv").config();
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_KEY;
@@ -10,9 +10,9 @@ const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: true });
 const app = express();
 const PORT = process.env.PORT || 4040;
 
-// Using a Free tier at the moment, that goes down every 50 seconds, this manually pings the server every 30 seconds to ensure it's still up
+// Using a Free tier at the moment, that  every 50 seconds, this manually pings the server every 30 seconds to ensure it's still up
 setInterval(() => {
-  https
+  http
     .get(`http://localhost:${PORT}`, (res) => {
       console.log(`Pinged the server - Status Code: ${res.statusCode}`);
     })
