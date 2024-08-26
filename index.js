@@ -10,9 +10,10 @@ const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: true });
 const app = express();
 const PORT = process.env.PORT || 4040;
 
+// Using a Free tier at the moment, that goes down every 50 seconds, this manually pings the server every 30 seconds to ensure it's still up
 setInterval(() => {
   https
-    .get(`https://ai-pgf-telegram-bot.onrender.com`, (res) => {
+    .get(`http://localhost:${PORT}`, (res) => {
       console.log(`Pinged the server - Status Code: ${res.statusCode}`);
     })
     .on("error", (e) => {
